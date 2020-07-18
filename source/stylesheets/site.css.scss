@@ -1,0 +1,46 @@
+nav {
+  font-family: "Sora";
+}
+
+body {
+  font-family: "Karla";
+  color: rgb(12,12, 12);
+  background-color: rgb(245, 245, 240);
+  font-size: 18px;
+}
+
+.bg-dark-grey {
+  background-color: #212121;
+}
+
+.bg-light-grey {
+  background-color: rgba(255,255,255, 0.78) ;
+}
+
+.img-scale-down {
+  object-fit: scale-down;
+}
+
+img {
+  max-height: 100%;
+}
+
+.sq200 {
+  height: 200px;
+  width: 200px;
+}
+
+.hover-ul:hover {
+  border-bottom: 2px solid black;
+}
+
+.blog-link > a {
+  color: black;
+  text-decoration: none;
+}
+
+pre > code {
+  padding: 1em;
+  border-left: 2px solid;
+
+}
