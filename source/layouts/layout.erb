@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Use the title from a page's frontmatter if it has one -->
-    <title><%= current_page.data.title || "Middleman" %></title>
+    <title><%= current_page.data.title || "Krithik Rao" %></title>
     <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/ace-css/css/ace.min.css" rel="stylesheet">
@@ -15,6 +14,10 @@
   </head>
   <body>
     <%=partial "partials/navbar" %>
-    <%= yield %>
-  </body>
+    <div class="container my2 md-my4 clearfix flex justify-center">
+      <div class="max-width-3 my2 col-12 px2">
+      <%= yield %>
+      </div>
+    </div>
+  </rody>
 </html>

@@ -44,3 +44,43 @@ img {
   border-left: 2px solid;
 
 }
+
+a {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.fit-content {
+  min-width: max-content;
+}
+
+.m-icon {
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.bar1, .bar2 {
+  width: 35px;
+  height: 3px;
+  background-color: white;
+  margin: 8px 0;
+}
+
+.change.m-icon {
+  -webkit-transform: rotate(90deg) scale(0.7);
+  transform: rotate(90deg) scale(0.7);
+}
+
+#mobile-nav {
+  top: 100%;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+#mobile-nav.hide {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
