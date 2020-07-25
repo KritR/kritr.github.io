@@ -44,7 +44,7 @@ img {
 
 
 .hover-ul:hover {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid;
 }
 
 .blog-link > a {
@@ -59,6 +59,7 @@ img {
 }
 
 a {
+  color: #106b8f;
   word-wrap: break-word;
   white-space: normal;
 }
