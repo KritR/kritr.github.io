@@ -1,0 +1,22 @@
+---
+title: Videos
+
+videos:
+  - https://www.youtube.com/embed/ngQtr2rCEw8
+  - https://www.youtube.com/embed/3gXL1S4MnyE
+---
+
+<div class="container clearfix">
+  <div class="px2 h2 bold my2 col col-12">
+    Videos
+  </div>
+  <% current_page.data.videos.each do |vid| %>
+  <div class="col my2 col-12 md-col-6 flex items-center">
+    <iframe class="mx-auto" src="<%= vid %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+  <% end %>
+  <div class="px2 h4 my2 col col-12 center">
+    More to come ...
+  </div>
+</div>
