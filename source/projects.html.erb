@@ -1,0 +1,93 @@
+---
+title: Projects
+
+projects:
+  - title: DataSphere
+    summary: A global news and data visualizer built at the boilermake hackathon over 36 hours. Extracted summaries and images from articles and populated them on a globe. Built with Phoenix, MongoDB, BigQuery, Python, and love.
+    url: https://datasphere.space
+  - title: MarkovAndMe
+    summary: A markov chain based text generation model written from scratch in Swift with a Vapor backend for serving up quotes.
+    url: https://github.com/KritR/MarkovAndMe
+  - title: Book of Knowledge
+    summary: A compilation of knowledge I have learned over the past many years. This is my lifestyle, my workflow, the notes I've compiled, valuable resources I've found, and whatever I felt was worth sharing.
+    url: https://kritr.github.io/book-of-knowledge
+  - title: WarpDrive for Firefox
+    summary: A browser extension for setting quick jumppoints in your browser. It serves as a simple command based alternative to bookmarks.
+    url: https://addons.mozilla.org/en-US/firefox/addon/warpdrive-ff/
+  - title: HuttonPatt Website
+    summary: This was a website made for a title and escrow firm in Maryland. It's running Django in the backend and has a CRM interface for easy updates.
+    url: https://huttonpatt.com
+  - title: Kleptic HTTP Server
+    summary: For Purdue CS252, I created a web server using modern C++ with routing, CGI script/bin support, multithread/multiprocess support, and IPC based logging. All with a clean lambda based interface.
+  - title: resume.html
+    summary: A lit-html rendered resume template that renders JSON into a printable resume. I use this for my own resume.
+    url: https://github.com/KritR/resume.html
+  - title: TempCam
+    summary: An iOS app built to take pictures that get saved locally and temporarily, before prompting you after some time to delete them. This way your phone is less likely to get cluttered.
+    url: https://github.com/KritR/TempCam
+  - title: FDS Purdue
+    summary: This was a simple point tracker for me and my friends that used Mithril.JS on the frontend and Express.js on the backend made in under 8 hours.
+  - title: Banana Skateboard
+    summary: A lua/love2d based mobile / desktop platformer game where you are a banana running away from Harambe. This was built at the Purdue Hello World hacathon.
+    url: https://github.com/KritR/BananaSkateboard
+  - title: Spook Sweeper
+    summary: A 2.5d minesweeper where you are a character on a minesweeper board that has to navigate to the very end. Built during a Purdue Game Developers Game Jam.
+    url: https://github.com/SamDB2000/SpookSweeper
+  - title: WiFi Visualizer
+    summary: Built a visualizer using d3.js to realtime visualize how far away the nearest wifi devices were. Used websockets to stream tcpdump data into a website with a very pretty visualization.
+    url: https://github.com/KritR/tcpdump-wifi-scanner
+  - title: Bitcoin Faucet Extractor
+    summary: Back in 2013 when bitcoin was still up and coming, there used to be online faucets which would release a few satoshi every hour. I built a ruby script to scrape these websites for bitcoin and even integrated a catcha solving API and proxies.
+    url: https://github.com/KritR/Bitcoin-Spigot
+  - title: Keyboard Blocker App
+    summary: Built a Win32 application in C# to block keyboard input for an online bounty. Windows SmartScreen didn't like it very much.
+    url: https://github.com/KritR/Keyboard-Blocker
+  - title: Statecraft Sim XSS
+    summary: Found a cross site scripting vulnerability in the Statecraft Simulation which basically allowed you to send and execute javascript via the chat. Reported the vulnerability and it was promptly fixed.
+  - title: Brainfuck Interpreter
+    summary: A Brainfuck Interpreter written in Rust. Primarily for fun and to understand how interpreters work. It was also a nice intro to using Rust.
+    url: https://github.com/KritR/brainfuck-interpreter
+  - title: Purdue Alexa Fit
+    summary: An alexa app for providing dining court information and corec information to users via alexa queries. Implemented in javascript. Built for the Purdue Hack XD hackathon.
+    url: https://github.com/KritR/purdue-fit-alexa-hackxd
+  - title: Mindful Android
+    summary: An Android app built for JP Morgan's Code for Good to provide users an easy way to recieve suggestions on how to improve their mood and to report their feelings. Built with Java and RealmDB. 
+    url: https://github.com/cfg-columbus18/team-13
+  - title: Matrix Calculator
+    summary: Implemented gaussian reduction to calculate matrix determinants and inverses in C# in a UWP application.
+    url: https://github.com/KritR/MatrixCalculator
+  - title: Conjuguemos Hack
+    summary: Conjuguemos was a way for spanish teachers to assign students homework. Because my friend didn't enjoy this, we discovered via investigating javascript that the answers were stored locally, and created a script to automatically finish spanish homework.
+  - title: Unix Shell
+    summary: Implemented a unix shell in C/C++ using Yacc/Lex for Purdue CS250. Supported most shell operations including piping, subshell, control c'ing, background tasks, history, and more.
+  - title: TurboBallz
+    summary: Created a JavaScript clone of the popular iOS game called Ballz that was going to integrate gamification and quizlet to add a learning aspect. 
+    url: https://github.com/KritR/TurboBallz
+  - title: Ping Pong Tracker
+    summary: Implemented a ping pong ball tracker in OpenCV and a couple utilities so we could visualize the ball over time and its velocity.
+    url: https://github.com/kkrinnin/balltracker
+  - title: Sorting Algorithm Visualizer
+    summary: Hacked together a quick visualizer for sorting algorithms in Python using TkPython. 
+    url: https://github.com/KritR/sorting-viewer
+---
+
+<div class="container clearfix">
+  <div class="px2 h2 bold my2 col col-12">
+    Projects
+  </div>
+  <% current_page.data.projects.each do |proj| %>
+  <div class="col col-12 md-col-6 sm-px2 py2"> 
+    <div class="bg-dark-grey white min-height-250 p2 relative col col-12">
+      <h2 class="h2"><%= proj.title %></h2>
+      <div class="h4"><%= proj.summary %> </div>
+      <% if defined? proj.url %>
+      <a href="<%= proj.url %>">
+        <div class="abs-br py1 px3 hover-ul bg-white black">
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </div>
+      </a>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+</div>

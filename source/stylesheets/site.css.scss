@@ -36,6 +36,16 @@ body {
   width: 200px;
 }
 
+.min-height-250 {
+  min-height: 250px;
+}
+
+.abs-br {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
 /* utils end */
 
 img {
