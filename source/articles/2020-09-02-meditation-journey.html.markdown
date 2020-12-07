@@ -34,3 +34,11 @@ Nonetheless, it does demonstrate the huge impact lack of sleep can have on one's
 ## Day 6
 
 This day reminded me how important beginners mind is. It's the idea of always approaching your practice with no preconceived notions or expectations of how they should be. Today I felt relatively "distracted". I had a lot of thoughts, and it took longer than usual to regain awareness. Once again I am a little bit more sleepy than I should be, so this should expected and another reminder of how sleep is important. However, I also had some other realizations. Recently I haven't been giving as much awareness to those little thoughts that quickly fade away, the ones I can just keep counting through. I treated them as if they weren't relevant. But these thoughts are just as much thoughts as anything else, and acknowledging their presence is also important. I have a feeling that every day of this practice will surprise me in its own way, with new "challenges" and experiences.
+
+## Day 7
+
+Wow. Again. Sleep is so important.
+I for some reason am doing very poorly with that.
+By this point I’m quite used to sitting. Of course a lot of effort is required when I’m sleepy to sit comfortably. But besides that if feels very natural as a part of my day.
+
+... and by this point sometime shortly after I lost the habit. However... it does appear that I can confidently jump back into meditating for long periods of time.
