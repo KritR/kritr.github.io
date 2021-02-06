@@ -1,0 +1,407 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Use the title from a page's frontmatter if it has one -->
+    <title>Developing and Contributing a MacPort</title>
+    
+<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="manifest" href="/favicon/manifest.json">
+
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/ace-css/css/ace.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="/stylesheets/site.css" rel="stylesheet" />
+<script src="/javascripts/site.js"></script>
+
+  </head>
+  <body>
+    <nav class="container uppercase relative bg-dark-grey white flex justify-between items-center px2 lg-px4">
+  <div class="my1">
+    <a class="white text-decoration-none medium h2 bold" href="/"><span>Krithik Rao</span></a>
+  </div>
+  <div class="sm-hide xs-hide">
+    <ul class="list-reset white">
+      <li class="inline-block px1"><a class="h5 hover-ul color-inherit text-decoration-none regular" href="/writings">writings</a></li>
+      <li class="inline-block px1"><a class="h5 hover-ul color-inherit text-decoration-none regular" href="/videos">videos</a></li>
+      <li class="inline-block px1"><a class="h5 hover-ul color-inherit text-decoration-none regular" href="/projects">projects</a></li>
+      <li class="inline-block px1"><a class="h5 hover-ul color-inherit text-decoration-none regular" href="/contact">contact</a></li>
+    </ul>
+  </div>
+  <div class="m-icon md-hide lg-hide my1" onclick="menubarChange(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+  </div>
+  <div id="mobile-nav" class="bg-black z1 py1 px3 hide md-hide lg-hide absolute">
+      <a class="white h4 px1 regular m0 btn block" href="/writings">writings</a>
+      <a class="white h4 px1 regular m0 btn block" href="/videos">videos</a>
+      <a class="white h4 px1 regular m0 btn block" href="/projects">projects</a>
+      <a class="white h4 px1 regular m0 btn block" href="/contact">contact</a>
+  </div>
+  <script>
+  function menubarChange(x) {
+    x.classList.toggle("change");
+    document.getElementById("mobile-nav").classList.toggle("hide");
+  }
+  </script>
+
+</nav>
+
+    <div class="container md2 md-my4 clearfix flex justify-center">
+      <div class="max-width-3 col-12 px2 blog-content">
+      <h1>Developing and Contributing a MacPort</h1>
+
+<p>I was looking for the DigitalOcean command line tool to install on my Mac.
+Unfortunately, they didn&rsquo;t already have a MacPorts
+compatible package I could install. In the end, I created my own Port
+&ndash;what MacPorts calls a software package&ndash;
+and got to learn the ins and outs of how this package manager actually works. If
+you are on a Mac and aren&rsquo;t already using a package manager, I highly recommend
+checking out either <a href="https://macports.org">MacPorts</a> or <a href="https://brew.sh">Brew</a>.</p>
+
+<p>While the documentation for MacPorts is fairly maintained and readable, I
+struggled in finding a starting point to set up my port development
+environment.</p>
+
+<p>This article aims to outline the procedures I found in developing my port and
+hopefully gives some insight into the process.</p>
+
+<h2>Setting up a Port Development Environment</h2>
+
+<p>Initial setup for development is fairly straightforward.</p>
+
+<p>First create a directory for the custom Portfiles. For permission reasons, it&rsquo;s
+easiest to create the custom port in a root level directory owned by root.
+I chose to create mine in <code>/opt</code> just because that&rsquo;s MacPort&rsquo;s primary
+directory.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; mkdir /opt/custom/
+</code></pre></div>
+<p>Then create a subdirectory for the specific package. This will also
+involve deciding on a category for the package. A list of all available
+categories is on the <a href="https://www.macports.org/ports.php">available ports page</a>.</p>
+
+<p>The directory created will have the path <code>/opt/custom/category_name/port_name</code>.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; mkdir -p /opt/custom/www/doctl/
+</code></pre></div>
+<p>The directory structure will look like the following when finished.</p>
+<div class="highlight"><pre class="highlight plaintext"><code># /opt
+# └── custom
+#     └── www
+#         └── doctl
+</code></pre></div>
+<p>Now create a placeholder Portfile for the port.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; touch /opt/custom/www/doctl/Portfile
+</code></pre></div>
+<p>Running the <code>portindex</code> command in the <code>/opt/custom</code> directory
+creates a PortIndex file so MacPorts know which ports are in the directory.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; cd /opt/custom
+&gt; portindex
+</code></pre></div>
+<p>It successfully finds the port and obviously fails because the Portfile is empty.</p>
+<div class="highlight"><pre class="highlight plaintext"><code># Creating port index in /opt/custom
+# Failed to parse file www/doctl/Portfile: invalid command name "universal_setup"
+
+# Total number of ports parsed:   1
+# Ports successfully parsed:      0
+# Ports failed:                   1
+# Up-to-date ports skipped:       0
+</code></pre></div>
+<p>MacPorts also needs to recognize this directory as a
+<a href="https://guide.macports.org/chunked/development.local-repositories.html">local Portfile repository</a>. Adding it to the sources file located <code>/opt/local/etc/macports/sources.conf</code> should fix that.
+This path may vary if you&rsquo;ve changed your MacPorts install prefix.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; $EDITOR /opt/local/etc/macports/sources.conf
+</code></pre></div>
+<p>By adding the directory <code>file:///opt/custom/</code> before the main
+repository for ports, MacPorts will recognize the custom ports
+before the public ones.</p>
+
+<p><code>sources.conf</code> should end up looking like this.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>file:///opt/custom/
+rsync://rsync.macports.org/macports/release/tarballs/ports.tar [default]
+</code></pre></div>
+<p>And we&rsquo;re now set to fill the contents of the actual Portfile.</p>
+
+<h2>Creating a Portfile</h2>
+
+<p>The corresponding documentation for this section of Portfile creation is can be
+found at <a href="https://guide.macports.org/#development.introduction">https://guide.macports.org/#development.introduction</a></p>
+
+<p>Let&rsquo;s begin editing the Portfile.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; $EDITOR /opt/custom/www/doctl/Portfile
+</code></pre></div>
+<p>First step is to add the editor configuration as a comment at the top, which will
+automatically tell Vim/Emacs how to format the Portfile.</p>
+<div class="highlight"><pre class="highlight tcl"><code><span class="c1"># -*- coding: utf-8</span><span class="p">;</span> mode: tcl<span class="p">;</span> tab-width: 4<span class="p">;</span> indent-tabs-mode: nil<span class="p">;</span> c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+</code></pre></div>
+<p>Next specify the <code>PortSystem</code>, a required field for every Portfile that
+should be set to <code>1.0</code></p>
+<div class="highlight"><pre class="highlight plaintext"><code>PortSystem          1.0
+</code></pre></div>
+<p>At this point it&rsquo;s necessary to figure out the type of port being built.</p>
+
+<p>By default MacPorts is set for building programs with a
+Makefile, and runs <code>./configure ; make ; make install</code>.
+In addition, each Port should have to specify its name, version, and all
+other build details.
+However, MacPorts also comes with a set of base definitions for Portfiles,
+and using one of these definitions can be done by assigning the new port to a
+Portgroup.
+The full list of PortGroups is
+<a href="https://guide.macports.org/chunked/reference.portgroup.html">here</a>.</p>
+
+<p>In my case, the command line application I&rsquo;m packaging is built in Golang, so I&rsquo;m
+going to set the Portgroup to Golang and and define the appropriate variables.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>PortGroup           golang 1.0
+go.setup            github.com/digitalocean/ doctl 1.20.1 v
+</code></pre></div>
+<p>Defining go.setup tells the portfile to fetch its dependencies from the digital
+ocean github repo, on the <code>doctl</code> repository, and to use the release <code>1.20.1</code>
+, which is prefixed by the character <code>v</code>.
+The actual release link is <a href="http://github.com/digitalocean/doctl/releases/v1.20.1">http://github.com/digitalocean/doctl/releases/v1.20.1</a>.</p>
+
+<p>Now the Portfile automatically defines the program <code>version</code> and its
+<code>master_sites</code> for us.
+Each Portgroup will define a different set of variables for you, so check
+and make sure to include the required fields.</p>
+
+<p>Now to define the rest of the fields:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>revision            0
+categories          www devel
+platforms           darwin
+license             Apache-2
+maintainers         {@kritr gmail.com:krdevmail} openmaintainer
+description         A command line interface for the DigitalOcean API
+long_description    ${description}
+</code></pre></div>
+<p>Revision 0 means this is the 0th revision of this specific version of the package.</p>
+
+<p>Categories should be listed in the order of priority, starting with the one
+defined as the parent directory for this port.</p>
+
+<p>By default the platform is set to <code>darwin</code> for OSX, other common ones include
+<code>linux</code> and <code>freebsd</code>.</p>
+
+<p>The license should be set to the license of the original package.</p>
+
+<p>Maintainers should be set to you. The format for this should be</p>
+<div class="highlight"><pre class="highlight plaintext"><code>{username domain:email}
+</code></pre></div>
+<p>It&rsquo;s setup this way to prevent unwanted spam for bots searching the internet for
+email looking strings.</p>
+
+<p>I&rsquo;ve also added the <code>openmaintainer</code> tag, which specifies that this port can
+be updated by other people for minor changes such as version bumps. I&rsquo;ll still
+be tagged on the pull request, but I won&rsquo;t be needed to approve the change.</p>
+
+<p>The description is simply the description for the package.
+Since the description is enough and the Portfile is Tcl, it&rsquo;s easy to assign
+the long_description variable to description.</p>
+
+<p>The next step is to define the package checksums. Because the Port is fetching
+files from the internet, it&rsquo;s important these files stay the same and aren&rsquo;t
+hijacked. Checking the checksum after a download prevents corrupt or malicious
+files from being installed.</p>
+
+<p>By reindexing the custom ports directory, MacPorts can help in acquiring the checksum.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>cd /opt/custom
+portindex
+</code></pre></div>
+<p>Now that MacPorts knows that the port exists,
+Running the following command will acquire the suggested checksums.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>port -d checksum doctl
+</code></pre></div>
+<p>the output will contain a set of lines akin to the following:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>The correct checksum line may be:
+checksums           rmd160  689b390b734667042d2b1af2bc1ad875d147eafc \
+                    sha256  654bc9b7194fc9c12271e33cdcf4520c97ddb31091b16a5a9fbaadb83907e036 \
+                    size    15653842
+</code></pre></div>
+<p>Simply copy those last 3 lines back into the Portfile. Saving the Portfile
+and rerunning <code>port -d checksum doctl</code> should return with a series of successes.</p>
+
+<p>The last couple steps are very port specific. In my case, this port depends on
+github for building the package.
+So I&rsquo;ll add the following.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>depends_build-append port:git
+</code></pre></div>
+<p>In addition I need to set some Go environment variables for during the build and to
+shift the build target directory.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>build.env-append    GO111MODULE=on
+build.target        ${worksrcpath}/cmd/${name}
+</code></pre></div>
+<p>In those lines you&rsquo;ll notice <code>${worksrcpath}</code> being used. This is the directory
+MacPorts downloads the build files to. It varies as MacPorts creates its own
+directories to build ports in, which is why it&rsquo;s important to use the globally
+configured variables to reference paths.
+A full list of globals can be found <a href="https://guide.macports.org/chunked/reference.variables.html">here</a>.</p>
+
+<p>Last but not at least is the install command.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>destroot {
+    xinstall -m 0755 ${worksrcpath}/${name} ${destroot}${prefix}/bin
+}
+</code></pre></div>
+<p>Destroot is one of the commands that will run after the build has completed.
+It&rsquo;s one of the many <a href="https://guide.macports.org/chunked/reference.phases.html">phases in the
+build</a>. MacPorts does
+an intermediate staging of the build during this phase of the installation,
+which is why <code>xinstall</code> command is run, to place the final binary file
+in the \$destroot.</p>
+
+<p>I specified permissions <code>0755</code> on the file, and place the binary file sourced from
+<code>${worksrcpath}/${name}</code> into <code>${destroot}${prefix}/bin</code> which is the
+standard binary install directory for MacPorts.</p>
+
+<p>I should note <code>xinstall</code> is a handly extension to copy files and create
+directories for use. For a full list of useful tcl commands in MacPorts, check
+out <a href="https://guide.macports.org/chunked/reference.tcl-extensions.html">https://guide.macports.org/chunked/reference.tcl-extensions.html</a>.</p>
+
+<p>And that&rsquo;s all the work that&rsquo;s needed to define a MacPorts file!</p>
+
+<p>But&hellip; if you&rsquo;re feeling frisky. There&rsquo;s also the concept of variants. These can
+be used to define variations of your default build.
+In my case I define a variant for zsh_completion.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>variant zsh_completion description {Install zsh completion} {
+    depends_run-append path:${prefix}/bin/zsh:zsh
+    post-destroot {
+        set site-functions ${destroot}${prefix}/share/zsh/site-functions
+        xinstall -d ${site-functions}
+        set completion-file [open ${site-functions}/_${name} "w"]
+        puts ${completion-file} [exec ${destroot}${prefix}/bin/${name} completion zsh]
+        close ${completion-file}
+    }
+}
+</code></pre></div>
+<p>While not going into as much detail, this creates a variant called
+zsh_completion with the description &ldquo;Install zsh completion&rdquo;.
+Then it sets zsh as a dependencies, and tells MacPorts to run a series of
+functions that create the directory for installing the zsh completion
+files, run a command to return the zsh completion file, and write it out to an
+actual file within the install directory.</p>
+
+<p>The end result for this port looked like this:</p>
+<div class="highlight"><pre class="highlight tcl"><code><span class="c1"># -*- coding: utf-8</span><span class="p">;</span> mode: tcl<span class="p">;</span> tab-width: 4<span class="p">;</span> indent-tabs-mode: nil<span class="p">;</span> c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           golang 1.0
+
+go.setup            github.com/digitalocean/doctl 1.20.1 v
+revision            0
+
+checksums           rmd160  689b390b734667042d2b1af2bc1ad875d147eafc <span class="se">\
+</span>                    sha256  654bc9b7194fc9c12271e33cdcf4520c97ddb31091b16a5a9fbaadb83907e036 <span class="se">\
+</span>                    size    15653842
+
+categories          www devel
+platforms           darwin
+license             Apache-2
+maintainers         <span class="p">{</span>@kritr gmail.com:krdevmail<span class="p">}</span> openmaintainer
+description         A command line interface for the DigitalOcean API
+long_description    $<span class="p">{</span>description<span class="p">}</span>
+
+depends_build-append port:git
+
+build.env-append    GO111MODULE=on
+build.target        $<span class="p">{</span>worksrcpath<span class="p">}</span>/cmd/$<span class="p">{</span>name<span class="p">}</span>
+
+destroot <span class="p">{</span>
+    xinstall -m 0755 $<span class="p">{</span>worksrcpath<span class="p">}</span>/$<span class="p">{</span>name<span class="p">}</span> $<span class="p">{</span>destroot<span class="p">}</span><span class="nv">${prefix}</span>/bin
+<span class="p">}</span>
+
+variant bash_completion <span class="p">{</span>
+    depends_run-append path:etc/bash_completion:bash-completion
+    post-destroot <span class="p">{</span>
+        set completions_path $<span class="p">{</span>destroot<span class="p">}</span><span class="nv">${prefix}</span>/share/bash-completion/completions
+        xinstall -d $<span class="p">{</span>completions_path<span class="p">}</span>
+        set completion-file <span class="p">[</span>open $<span class="p">{</span>completions_path<span class="p">}</span>/$<span class="p">{</span>name<span class="p">}</span> <span class="s2">"w"</span><span class="p">]</span>
+        puts $<span class="p">{</span>completion-file<span class="p">}</span> <span class="p">[</span>exec $<span class="p">{</span>destroot<span class="p">}</span><span class="nv">${prefix}</span>/bin/$<span class="p">{</span>name<span class="p">}</span> completion bash<span class="p">]</span>
+        close $<span class="p">{</span>completion-file<span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+variant zsh_completion description <span class="p">{</span>Install zsh completion<span class="p">}</span> <span class="p">{</span>
+    depends_run-append path:$<span class="p">{</span>prefix<span class="p">}</span>/bin/zsh:zsh
+    post-destroot <span class="p">{</span>
+        set site-functions $<span class="p">{</span>destroot<span class="p">}</span><span class="nv">${prefix}</span>/share/zsh/site-functions
+        xinstall -d $<span class="p">{</span>site-functions<span class="p">}</span>
+        set completion-file <span class="p">[</span>open $<span class="p">{</span>site-functions<span class="p">}</span>/_$<span class="p">{</span>name<span class="p">}</span> <span class="s2">"w"</span><span class="p">]</span>
+        puts $<span class="p">{</span>completion-file<span class="p">}</span> <span class="p">[</span>exec $<span class="p">{</span>destroot<span class="p">}</span><span class="nv">${prefix}</span>/bin/$<span class="p">{</span>name<span class="p">}</span> completion zsh<span class="p">]</span>
+        close $<span class="p">{</span>completion-file<span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div>
+<p>Running port install should now result in our package being correctly installed.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; port install doctl
+</code></pre></div>
+<h2>Publishing the Port</h2>
+
+<p>Finally it&rsquo;s publishing time.
+Detailed instruction for this can be found
+<a href="https://guide.macports.org/chunked/project.contributing.html">https://guide.macports.org/chunked/project.contributing.html</a>.</p>
+
+<p>I&rsquo;ll simply do my best to give a rundown of the process.</p>
+
+<ol>
+<li>Make sure the port doesn&rsquo;t already exist</li>
+<li>Run port lint on the port</li>
+</ol>
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; port lint --nitpick doctl
+</code></pre></div>
+<ol>
+<li>Fix any changes that need to be made.</li>
+<li>Fork the <a href="https://github.com/macports/macports-ports">MacPorts Repository on
+Github</a></li>
+<li>Add the port&rsquo;s folder to the existing category directory in the fork</li>
+<li>Make one detailed commit of your change (or simply rebase and squash all your
+commits with a simple title <code>doctl: new port</code>)</li>
+<li>Make a Pull Request on Github and follow instructions appropriately</li>
+<li>Wait to hear back from a maintainer</li>
+<li>Fix any small changes they request</li>
+<li>Celebrate your accepted pull request !</li>
+</ol>
+
+<p><img src="/articles/2019/06/30/developing-and-contributing-a-macport/accepted.png" alt="Pull Request Accepted" /></p>
+
+<h2>Upgrading a Port</h2>
+
+<p>While I could cover this as well, the folks at MacPorts have solid documentation
+in this area already, that I shall link <a href="https://trac.macports.org/wiki/howto/Upgrade">https://trac.macports.org/wiki/howto/Upgrade</a>.</p>
+
+<h2>Conclusion</h2>
+
+<p>And so the doctl port is now available on MacPorts.</p>
+
+<p>I myself needed doctl for my own uses but contributing a Portfile
+or any other package manager submission is a good way
+to get involved in the open source community and helps you understand the
+intracacies of building different projects. It&rsquo;s also really convenient for the
+hundreds of other developers that will probably end up using your work at some point
+in time.</p>
+
+<p>In time we may get down to fewer package managers with more unified tooling, but
+for now, we&rsquo;ll keep chipping away at the endless supply of new software to
+package.</p>
+
+      </div>
+    </div>
+  </body>
+</html>
