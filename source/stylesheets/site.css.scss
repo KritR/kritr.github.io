@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap');
+
 nav {
   font-family: "Barlow";
 }
@@ -53,8 +55,21 @@ img {
 }
 
 
+.hover-ul-href:hover>a {
+  border-bottom: 2px solid;
+}
+
 .hover-ul:hover {
   border-bottom: 2px solid;
+}
+
+.blog-time {
+  font-family: "Chivo Mono", monospace;
+  font-size: 0.8em;
+  min-width: 70px;
+  background: black;
+  color: white;
+  padding: 0px 2px;
 }
 
 .blog-link > a {
@@ -72,10 +87,6 @@ a {
   color: #106b8f;
   word-wrap: break-word;
   white-space: normal;
-}
-
-.fit-content {
-  min-width: max-content;
 }
 
 /* 
